@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+
+usage() {
+	cat << EOF
+USAGE:
+	note [OPTION] ...
+
+PARAMETERS
+	-c <path (optional)>
+		Compiles all .md files to pdf in the directory of the given path. 
+		If a path is not given the .md files in the current directory are compiled.
+		
+	-i <course name> <path (optional)>
+		Initiates a skeleton directory for a new course from the directory given in path. 
+		If a path is not given the skeleton directory is created in the current directory.
+
+	-n 
+		Creates a new "skeleton" markdown note file. 
+	
+	-o
+		Opens the latest note session in the current directory.
+	
+	-s 
+		Search the given course for a string.	
+EOF
+}
+
+usage
+
