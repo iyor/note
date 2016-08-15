@@ -5,7 +5,7 @@ set -e
 usage() {
 	cat << EOF
 USAGE:
-	note [OPTION] ...
+	note [-c path] [-i course path][-nos] 
 
 PARAMETERS
 	-c <path (optional)>
@@ -24,8 +24,30 @@ PARAMETERS
 	
 	-s 
 		Search the given course for a string.	
+
 EOF
 }
 
-usage
-
+while getopts ":cinos" opt; do
+	case $opt in
+		c)
+			echo "-c was given"
+		;;
+		i)
+			echo "-i was given"
+		;;
+		n)
+			echo "-n was given"
+		;;
+		o)
+			echo "-o was given"
+		;;
+		s)
+			echo "-n was given"
+		;;
+		\?)
+			echo -e "Invalid options: -$OPTARG \n"
+			usage
+		;;
+	esac
+done
