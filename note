@@ -28,13 +28,15 @@ PARAMETERS
 EOF
 }
 
-while getopts ":cinos" opt; do
+while getopts ":c:i:nos" opt; do
 	case $opt in
 		c)
 			echo "-c was given"
+			echo "Arguement: $OPTARG"
 		;;
 		i)
 			echo "-i was given"
+			echo "Argument: $OPTARG"
 		;;
 		n)
 			echo "-n was given"
@@ -43,7 +45,7 @@ while getopts ":cinos" opt; do
 			echo "-o was given"
 		;;
 		s)
-			echo "-n was given"
+			echo "-s was given"
 		;;
 		\?)
 			echo -e "Invalid options: -$OPTARG \n"
