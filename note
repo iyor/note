@@ -28,6 +28,12 @@ PARAMETERS
 EOF
 }
 
+newSession() { echo;}
+newCourse() { echo;}
+openLastSession() { echo;}
+search() { echo; }
+outputToPDF() { echo;}
+
 while getopts ":c:i:nos" opt; do
 	case $opt in
 		c)
