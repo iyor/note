@@ -33,7 +33,7 @@ newCourse() { echo "In new course with arguments: $1 $2";}
 newSession() { echo "In new session";}
 checkLastSession() { echo "In checkLastSession";}
 openLastSession() { echo "In open last session";}
-search() { echo "In search"; }
+search() { echo "In search: $1"; }
 
 PARSED_OPTIONS=$(getopt c::i:nos: $*)
 set -- $PARSED_OPTIONS
@@ -58,7 +58,7 @@ for arg do
 			course=$1
 			shift; shift
 			path=$1
-			if [ -z $path  ]; then
+			if [ -z $path ]; then
 				newCourse $course "." 
 			else
 				newCourse $course $path
@@ -76,7 +76,12 @@ for arg do
 		;;
 		-s)
 			echo "s was given"
-			search
+			shift
+			if [ -z $1 ]; then
+				echo "Error: Search pattern required."
+			else
+				search $1
+			fi
 			shift
 		;;
 	esac
