@@ -29,7 +29,13 @@ EOF
 }
 
 outputToPDF() { echo "In output to pdf with argument: $1";}
-newCourse() { echo "In new course with arguments: $1 $2";}
+newCourse() { 
+	echo "Creating root directory for course $1 at path: $2 ..."
+	mkdir $2/$1/
+	echo "Creating subfolders ..."
+	mkdir $2/$1/images && mkdir $2/$1/assignments && mkdir $2/$1/misc
+	echo "Complete"
+}
 newSession() { echo "In new session";}
 checkLastSession() { echo "In checkLastSession";}
 openLastSession() { echo "In open last session";}
@@ -53,7 +59,6 @@ for arg do
 			fi
 		;;
 		-i)
-			echo "i was given"
 			shift
 			course=$1
 			shift; shift
