@@ -28,34 +28,56 @@ PARAMETERS
 EOF
 }
 
-newSession() { echo;}
-newCourse() { echo;}
-openLastSession() { echo;}
-search() { echo; }
-outputToPDF() { echo;}
+outputToPDF() { echo "In output to pdf with argument: $1";}
+newCourse() { echo "In new course with arguments: $1 $2";}
+newSession() { echo "In new session";}
+checkLastSession() { echo "In checkLastSession";}
+openLastSession() { echo "In open last session";}
+search() { echo "In search"; }
 
-while getopts ":c:i:nos" opt; do
-	case $opt in
-		c)
-			echo "-c was given"
-			echo "Arguement: $OPTARG"
+PARSED_OPTIONS=$(getopt c::i:nos: $*)
+set -- $PARSED_OPTIONS
+
+if [ $# -eq 1 ]; then
+	usage
+fi
+for arg do
+	case "$arg" in
+		-c)
+			echo "c was given"
+			shift; shift
+			if [ -z $1 ]; then
+				outputToPDF "."
+			else
+				outputToPDF $1
+			fi
 		;;
-		i)
-			echo "-i was given"
-			echo "Argument: $OPTARG"
+		-i)
+			echo "i was given"
+			shift
+			course=$1
+			shift; shift
+			path=$1
+			if [ -z $path  ]; then
+				newCourse $course "." 
+			else
+				newCourse $course $path
+			fi
 		;;
-		n)
-			echo "-n was given"
+		-n)
+			echo "n was given"
+			newSession
+			shift
 		;;
-		o)
-			echo "-o was given"
+		-o)
+			echo "o was given"
+			openLastSession
+			shift
 		;;
-		s)
-			echo "-s was given"
-		;;
-		\?)
-			echo -e "Invalid options: -$OPTARG \n"
-			usage
+		-s)
+			echo "s was given"
+			search
+			shift
 		;;
 	esac
 done
