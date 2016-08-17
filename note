@@ -30,7 +30,11 @@ EOF
 
 outputToPDF() { echo "In output to pdf with argument: $1";}
 newCourse() { 
-	echo "Creating root directory for course $1 at path: $2 ..."
+	if [ $2 = "." ]; then
+		echo "Creating root directory for course $1 in current directory ..."
+	else
+		echo "Creating root directory for course $1 at path: $2 ..."
+	fi
 	mkdir $2/$1/
 	echo "Creating subfolders ..."
 	mkdir $2/$1/images && mkdir $2/$1/assignments && mkdir $2/$1/misc
