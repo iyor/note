@@ -37,13 +37,17 @@ outputToPDF() {
 		local course=${$path##*/}
 	fi
 	if inNotesDirectory $path; then
+		echo "Compiling all sessions to temporary file ..."
 		touch $path/.temp.md
 		echo -e "# Course: $course \n *** \n" >> .temp.md
 		for file in $path/*.md; do
 			cat $file >> $path/.temp.md
 		done
-		pandoc $path/.temp.md --latex-engine=xelatex -o $path/${course}.pdf
+		echo "Converting temporary file to pdf ..."
+		pandoc -f markdown_github $path/.temp.md --latex-engine=xelatex -o $path/${course}.pdf
+		echo "Deleting temporary file ..."
 		rm $path/.temp.md
+		echo "Complete"
 	fi
 }
 newCourse() { 
@@ -107,7 +111,6 @@ fi
 for arg do
 	case "$arg" in
 		-c)
-			echo "c was given"
 			shift; shift
 			if [ -z $1 ]; then
 				outputToPDF "."
