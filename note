@@ -1,5 +1,6 @@
 #!/bin/bash
-# Add something to check whether we are in an existing notes directory. Should apply to -cnos
+# Dependencies: getopt (GNU version), pandoc, basicTex
+
 set -e
 
 usage() {
@@ -28,10 +29,26 @@ PARAMETERS
 EOF
 }
 
-outputToPDF() { echo "In output to pdf with argument: $1";}
+outputToPDF() {
+	local path=$1
+	if [ $path="." ]; then
+		local course=${PWD##*/}
+	else
+		local course=${$path##*/}
+	fi
+	if inNotesDirectory $path; then
+		touch $path/.temp.md
+		echo -e "# Course: $course \n *** \n" >> .temp.md
+		for file in $path/*.md; do
+			cat $file >> $path/.temp.md
+		done
+		pandoc $path/.temp.md --latex-engine=xelatex -o $path/${course}.pdf
+		rm $path/.temp.md
+	fi
+}
 newCourse() { 
-	course=$1
-	path=$2
+	local course=$1
+	local path=$2
 	if inNotesDirectory $path; then
 		"Warning: Creating nestled notes directory!"
 	fi
