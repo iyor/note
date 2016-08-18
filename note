@@ -65,7 +65,7 @@ numberOfSessions() {
 	echo $noOfSessions
 }
 openLastSession() { 
-	if [ $(numberOfSessions) -eq 0 ]; then
+	if [ $(numberOfSessions) -eq 0 ] || ! inNotesDirectory "."; then
 		echo "Error: No session available in current directory"
 	else
 		vim s$(numberOfSessions).md
