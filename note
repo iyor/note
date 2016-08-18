@@ -40,12 +40,23 @@ newCourse() {
 	mkdir $2/$1/images && mkdir $2/$1/assignments && mkdir $2/$1/misc
 	echo "Complete"
 }
-newSession() { echo "In new session";}
+newSession() { 
+	echo "Creating new sesssion ..."
+	local newSession=$(($(numberOfSessions)+1))
+	touch s$newSession.md
+	echo "Complete"
+}
 numberOfSessions() { 
 	local noOfSessions=$(ls -l *.md 2> /dev/null | wc -l) 
 	echo $noOfSessions
 }
-openLastSession() { echo "In open last session";}
+openLastSession() { 
+	if [ $(numberOfSessions) -eq 0 ]; then
+		echo "Error: No session available in current directory"
+	else
+		vim s$(numberOfSessions).md
+	fi
+}
 search() { echo "In search: $1"; }
 
 PARSED_OPTIONS=$(getopt c::hinost $*)
@@ -84,12 +95,10 @@ for arg do
 			fi
 		;;
 		-n)
-			echo "n was given"
 			newSession
 			shift
 		;;
 		-o)
-			echo "o was given"
 			openLastSession
 			shift
 		;;
