@@ -42,7 +42,8 @@ newCourse() {
 }
 newSession() { echo "In new session";}
 numberOfSessions() { 
-	echo $(ls -l *.md 2> /dev/null | wc -l) 
+	local noOfSessions=$(ls -l *.md 2> /dev/null | wc -l) 
+	echo $noOfSessions
 }
 openLastSession() { echo "In open last session";}
 search() { echo "In search: $1"; }
@@ -103,8 +104,7 @@ for arg do
 			shift
 		;;
 		-t) #Option only used for testing!
-			#echo $(numberOfSessions)
-			numberOfSessions
+			echo $(numberOfSessions)
 		;;
 	esac
 done
