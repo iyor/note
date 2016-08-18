@@ -41,10 +41,19 @@ newCourse() {
 	echo "Complete"
 }
 newSession() { 
-	echo "Creating new sesssion ..."
-	local newSession=$(($(numberOfSessions)+1))
-	touch s$newSession.md
-	echo "Complete"
+	if inNotesDirectory; then
+		echo "Creating new session ..."
+		local newSession=$(($(numberOfSessions)+1))
+		touch s$newSession.md
+		echo "Preparing new session ..."
+		echo "## Course: ${PWD##*/}" >> s$newSession.md
+		echo "## Date: $(date +%Y-%m-%d)" >> s$newSession.md
+		echo -e "## **Lecture**/Exercise \n \n ***" >> s$newSession.md
+		echo "Complete"
+	else
+		echo "Error: Currently not in notes directory"
+		echo "Please move to notes directory or initiate one with the -i option"
+	fi
 }
 numberOfSessions() { 
 	local noOfSessions=$(ls -l *.md 2> /dev/null | wc -l) 
@@ -55,6 +64,13 @@ openLastSession() {
 		echo "Error: No session available in current directory"
 	else
 		vim s$(numberOfSessions).md
+	fi
+}
+inNotesDirectory() { 
+	if [ -d images ] && [ -d assignments ] && [ -d misc ]; then
+		return 0
+	else 
+		return 1
 	fi
 }
 search() { echo "In search: $1"; }
@@ -113,7 +129,7 @@ for arg do
 			shift
 		;;
 		-t) #Option only used for testing!
-			echo $(numberOfSessions)
+			echo $(inNotesDirectory)
 		;;
 	esac
 done
