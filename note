@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Add something to check whether we are in an existing notes directory. Should apply to -cnos
 set -e
 
 usage() {
@@ -41,11 +41,13 @@ newCourse() {
 	echo "Complete"
 }
 newSession() { echo "In new session";}
-checkLastSession() { echo "In checkLastSession";}
+numberOfSessions() { 
+	echo $(ls -l *.md 2> /dev/null | wc -l) 
+}
 openLastSession() { echo "In open last session";}
 search() { echo "In search: $1"; }
 
-PARSED_OPTIONS=$(getopt c::i:nos: $*)
+PARSED_OPTIONS=$(getopt c::hinost $*)
 set -- $PARSED_OPTIONS
 
 if [ $# -eq 1 ]; then
@@ -62,11 +64,18 @@ for arg do
 				outputToPDF $1
 			fi
 		;;
+		-h)
+			usage
+		;;
 		-i)
-			shift
-			course=$1
 			shift; shift
-			path=$1
+			course=$1
+			path=$2
+			if [ -z $course ]; then
+				echo -e "Error: Course name needed to initiate folder structure.\n"
+				usage
+				break
+			fi
 			if [ -z $path ]; then
 				newCourse $course "." 
 			else
@@ -84,14 +93,18 @@ for arg do
 			shift
 		;;
 		-s)
-			echo "s was given"
 			shift
-			if [ -z $1 ]; then
+			echo $2
+			if [ -z $2 ]; then
 				echo "Error: Search pattern required."
 			else
-				search $1
+				search $2
 			fi
 			shift
+		;;
+		-t) #Option only used for testing!
+			#echo $(numberOfSessions)
+			numberOfSessions
 		;;
 	esac
 done
