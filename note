@@ -30,18 +30,23 @@ EOF
 
 outputToPDF() { echo "In output to pdf with argument: $1";}
 newCourse() { 
-	if [ $2 = "." ]; then
-		echo "Creating root directory for course $1 in current directory ..."
-	else
-		echo "Creating root directory for course $1 at path: $2 ..."
+	course=$1
+	path=$2
+	if inNotesDirectory $path; then
+		"Warning: Creating nestled notes directory!"
 	fi
-	mkdir $2/$1/
+	if [ $path = "." ]; then
+		echo "Creating root directory for course $course in current directory ..."
+	else
+		echo "Creating root directory for course $course at path: $path ..."
+	fi
+	mkdir $path/$course/
 	echo "Creating subfolders ..."
-	mkdir $2/$1/images && mkdir $2/$1/assignments && mkdir $2/$1/misc
+	mkdir $path/$course/images && mkdir $path/$course/assignments && mkdir $path/$course/misc
 	echo "Complete"
 }
 newSession() { 
-	if inNotesDirectory; then
+	if inNotesDirectory "."; then
 		echo "Creating new session ..."
 		local newSession=$(($(numberOfSessions)+1))
 		touch s$newSession.md
@@ -67,7 +72,8 @@ openLastSession() {
 	fi
 }
 inNotesDirectory() { 
-	if [ -d images ] && [ -d assignments ] && [ -d misc ]; then
+	local path=$1
+	if [ -d $path/images ] && [ -d $path/assignments ] && [ -d $path/misc ]; then
 		return 0
 	else 
 		return 1
