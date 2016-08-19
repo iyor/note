@@ -48,9 +48,10 @@ outputToPDF() {
 			cat $file >> $path/.temp.md
 		done
 		echo "Converting temporary file to pdf ..."
-		pandoc $path/.temp.md --latex-engine=xelatex -o $path/${course}.pdf
+		pandoc --latex-engine=xelatex -V mainfont='Helvetica Neue' \
+		-V geometry:margin=1.2in --toc -o $path/${course}.pdf $path/.temp.md  
 		echo "Deleting temporary file ..."
-		#rm $path/.temp.md
+		rm $path/.temp.md
 		echo "Complete"
 	fi
 }
@@ -82,7 +83,7 @@ newSession() {
 		echo "Error: Currently not in notes directory"
 		echo "Please move to notes directory or initiate one with the -i option"
 	fi
-}
+}  
 numberOfSessions() { 
 	local noOfSessions=$(ls -l *.md 2> /dev/null | wc -l) 
 	echo $noOfSessions
