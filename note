@@ -39,14 +39,17 @@ outputToPDF() {
 	if inNotesDirectory $path; then
 		echo "Compiling all sessions to temporary file ..."
 		touch $path/.temp.md
-		echo -e "# Course: $course \n *** \n" >> .temp.md
+		echo -e "--- \n title: $(echo $course | awk '{print toupper($0)}') \n"\
+				"author: Erik Jansson \n"\
+				"date: $(date +%Y-%m-%d)\n---\n" >> .temp.md
 		for file in $path/*.md; do
+			echo "\newpage" >> $path/.temp.md
 			cat $file >> $path/.temp.md
 		done
 		echo "Converting temporary file to pdf ..."
-		pandoc -f markdown_github $path/.temp.md --latex-engine=xelatex -o $path/${course}.pdf
+		pandoc $path/.temp.md --latex-engine=xelatex -o $path/${course}.pdf
 		echo "Deleting temporary file ..."
-		rm $path/.temp.md
+		#rm $path/.temp.md
 		echo "Complete"
 	fi
 }
@@ -72,9 +75,7 @@ newSession() {
 		local newSession=$(($(numberOfSessions)+1))
 		touch s$newSession.md
 		echo "Preparing new session ..."
-		echo "## Course: ${PWD##*/}" >> s$newSession.md
-		echo "## Date: $(date +%Y-%m-%d)" >> s$newSession.md
-		echo -e "## **Lecture**/Exercise \n \n ***" >> s$newSession.md
+		echo -e "# Subject \n# ${PWD##*/} \n# $(date +%Y-%m-%d)" >> s$newSession.md
 		echo "Complete"
 	else
 		echo "Error: Currently not in notes directory"
