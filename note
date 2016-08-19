@@ -1,6 +1,7 @@
 #!/bin/bash
 # Dependencies: getopt (GNU version), pandoc, basicTex
 
+# Add math formula rendering
 set -e
 
 usage() {
@@ -75,7 +76,7 @@ newSession() {
 		local newSession=$(($(numberOfSessions)+1))
 		touch s$newSession.md
 		echo "Preparing new session ..."
-		echo -e "# Subject \n# ${PWD##*/} \n# $(date +%Y-%m-%d)" >> s$newSession.md
+		echo -e "# Subject $(date +%Y-%m-%d)" >> s$newSession.md
 		echo "Complete"
 	else
 		echo "Error: Currently not in notes directory"
