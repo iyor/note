@@ -1,7 +1,6 @@
 #!/bin/bash
 # Dependencies: getopt (GNU version), pandoc, basicTex
 
-# Add math formula rendering
 set -e
 
 usage() {
