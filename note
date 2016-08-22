@@ -103,7 +103,13 @@ inNotesDirectory() {
 	fi
 }
 search() { 
-	ack -i $1 ./*.md
+	if inNotesDirectory "."; then
+		if !(ack -i $1 ./*.md); then
+			echo "No occurences of the search term found." 
+		fi
+	else
+		echo "Error: Currently not in notes directory."
+	fi
 }
 
 PARSED_OPTIONS=$(getopt c::hinost $*)
