@@ -1,5 +1,4 @@
 #!/bin/bash
-# Dependencies: getopt (GNU version), pandoc, basicTex
 
 set -e
 
