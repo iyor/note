@@ -91,7 +91,7 @@ openLastSession() {
 	if [ $(numberOfSessions) -eq 0 ] || ! inNotesDirectory "."; then
 		echo "Error: No session available in current directory"
 	else
-		vim s$(numberOfSessions).md
+		vim s$(numberOfSessions).md 
 	fi
 }
 inNotesDirectory() { 
@@ -102,7 +102,9 @@ inNotesDirectory() {
 		return 1
 	fi
 }
-search() { echo "In search: $1"; }
+search() { 
+	ack -i $1 ./*.md
+}
 
 PARSED_OPTIONS=$(getopt c::hinost $*)
 set -- $PARSED_OPTIONS
@@ -148,16 +150,12 @@ for arg do
 		;;
 		-s)
 			shift
-			echo $2
 			if [ -z $2 ]; then
 				echo "Error: Search pattern required."
 			else
 				search $2
 			fi
 			shift
-		;;
-		-t) #Option only used for testing!
-			echo $(inNotesDirectory)
 		;;
 	esac
 done
