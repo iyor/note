@@ -9,7 +9,7 @@ Simply clone the repo and place a symlink to note manually in your path or run t
 ## Usage
 note is a simple way to structure notes with the command-line.
 
-Begin by typing `note -i <course name> <path (optional)>`. This will initiate the base structure for a notes directory named `<course name>` at `path`. Should `<path>` be omitted, the notes directory will be created in the current working directory.
+Begin by typing `note -i <course name> <path (optional)>`. This will initiate the base structure for a notes directory named `<course name>` at `<path>`. Should `<path>` be omitted, the notes directory will be created in the current working directory.
 
 Start a new note-taking session (for example, at a new lecture) by giving the command `note -n`. This will create a new markdown file. Typing `note -no` will create a new note session and open it in vim in one fell swoop.
 
@@ -37,3 +37,10 @@ note needs:
   * pandoc
   * LaTex/basicTex
 
+## Future Development
+To satisfy more flexible needs each note directory will also contain a .note_conf file. This file will enable users to configure note to their own specific needs, including
+* default text editor
+* output style (font, margins, etc)
+* default folder structure
+
+This will be implemented should I ever feel I have too little to do.
