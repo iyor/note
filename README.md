@@ -28,7 +28,7 @@ notes_dir/
   |-s3.md
   ...
 ```
-where s*.md are the different note-taking sessions. Images, graphics and figures that are not easily translatable into markdown can be placed in the images/ directory.
+where s*.md are the different note-taking sessions. Images, graphics and figures that are not easily translatable into markdown can be placed and referenced to in the images/ directory.
 
 ## Dependencies
 note needs:
