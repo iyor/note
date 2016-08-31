@@ -43,6 +43,7 @@ outputToPDF() {
 				"date: $(date +%Y-%m-%d)\n---\n" >> .temp.md
 		for file in $path/*.md; do
 			echo "\newpage" >> $path/.temp.md
+			echo -e "\n" >> $path/.temp.md
 			cat $file >> $path/.temp.md
 		done
 		echo "Converting temporary file to pdf ..."
