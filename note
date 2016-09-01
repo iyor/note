@@ -48,7 +48,7 @@ outputToPDF() {
 		done
 		echo "Converting temporary file to pdf ..."
 		pandoc --latex-engine=xelatex -V mainfont='Helvetica Neue' \
-		-V geometry:margin=1.2in --toc -o $path/${course}.pdf $path/.temp.md  
+		-V geometry:margin=1.2in --toc --toc-depth=2 -o $path/${course}.pdf $path/.temp.md  
 		echo "Deleting temporary file ..."
 		rm $path/.temp.md
 		echo "Complete"
