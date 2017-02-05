@@ -1,7 +1,7 @@
 # note
 A command line utility simplifying the management of notes and note-taking in vim! 
 
-Based on a script by [connermcd](https://github.com/connermcd/notes)
+Inspired by a script by [connermcd](https://github.com/connermcd/notes)
 
 ## Installation
 Simply clone the repo and place a symlink to note manually in your path or run the install.sh script which will place a symlink to note in /usr/bin/local/.
